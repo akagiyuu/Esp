@@ -5,9 +5,8 @@
 #include <addons/TokenHelper.h>
 #include "device_info.h"
 #include <EEPROM.h>
+#include <log.h>
 
-FirebaseData fbdo;
-FirebaseData stream;
 FirebaseAuth auth;
 FirebaseConfig config;
 
@@ -48,16 +47,9 @@ namespace FirebaseHelper
 
 		Firebase.reconnectWiFi(true);
 	}
-	// if (Firebase.RTDB.setInt(&fbdo, +"/Oxygen_Level", ran1)) {
-	// 		Serial.println("PASSED");
-	// 		Serial.println("PATH: " + fbdo.dataPath());
-	// 		Serial.println("TYPE: " + fbdo.dataType());
-	// 	} else {
-	// 		Serial.println("FAILED");
-	// 		Serial.println("REASON: " + fbdo.errorReason());
-	// 	}
-
-	template <int> void set(FirebaseData data_object, string path, int data)
+	void log(FirebaseData *data_object)
 	{
+		Log::Info("Path: " + data_object->dataPath());
+		Log::Info("Type: " + data_object->dataType());
 	}
 }

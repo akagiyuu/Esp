@@ -19,9 +19,9 @@ void WifiHelper::init(WiFiManager *wifi_manager)
 
 	WiFiManagerParameter custom_text(default_parameter);
 
-	(*wifi_manager).resetSettings();
+	wifi_manager->resetSettings();
 
-	(*wifi_manager).addParameter(&custom_text);
-	(*wifi_manager).autoConnect("WING's WiFi Manager");
+	wifi_manager->addParameter(&custom_text);
+	wifi_manager->autoConnect("WING's WiFi Manager");
 	Serial.println("connected :)");
 }
