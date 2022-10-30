@@ -2,30 +2,21 @@
 #if defined(ESP8266)
 #include <ESP8266WiFi.h>
 #endif
-#include <Firebase_ESP_Client.h>
+#include <firebase_helper.h>
 #include <DNSServer.h>
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>
 #include <EEPROM.h>
-#include "wifi.h"
-#include "env.h"
-#include "firebase.h"
+#include <wifi_helper.h>
+#include <env.h>
 
-// Provide the token generation process info.
-#include <addons/TokenHelper.h>
-
-// Provide the RTDB payload printing info and other helper functions.
 #include <addons/RTDBHelper.h>
-
 /* 2. Define the API Key */
 
 /* 3. Define the RTDB URL */
 
 #define EEPROM_SIZE 1
 
-// Define Firebase Data objects
-FirebaseData fbdo;
-FirebaseData stream;
 
 WiFiManager wifi_manager;
 
@@ -64,8 +55,7 @@ boolean read_and_parse_serial_data()
 			// Clear previous values from array.
 			strArr[dataStorage] = "";
 			// Save substring into array.
-			strArr[dataStorage] =
-				rxString.substring(stringStart1, i);
+			strArr[dataStorage] = rxString.substring(stringStart1, i);
 			// Set new string starting point.
 			stringStart1 = (i + 1);
 			dataStorage += 1;
@@ -90,70 +80,13 @@ void setup()
 
 	WifiHelper::init(&wifi_manager);
 
-    int is_signed_up = EEPROM.read(0);
-    Serial.println(is_signed_up);
+	int is_signed_up = EEPROM.read(0);
+	Serial.println(is_signed_up);
 
-	Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
-    FirebaseHelper::init(is_signed_up);
+	// Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
+	FirebaseHelper::init(is_signed_up, ApiKey, DatabaseURL);
 }
 
 void loop()
 {
-	String uid = auth.token.uid.c_str();
-	/* Cái này để lấy dữ liệu từ Arduino */
-
-	/* sau 15 giây gửi đi tín hiệu 1 lần, hàm millis cho biết thời gian chạy chương trình cho đến lúc hàm được gọi*/
-	if (Firebase.ready() && read_and_parse_serial_data()) {
-		// Write an Int number on the database path test/int
-		/* Đoạn này để set dữ liệu lên realtime database, dữ liệu phải có cùng dạng với lệnh chẳng hạn setInt thì
-    kiểu dữ liệu phải là int mới được không báo lỗi*/
-		/* Cái test/int là cái nhánh mình muốn set dữ liệu trên database, ran1 là giá trị của dữ liệu sẽ set lấy
-    từ biến ran1*/
-		if (Firebase.RTDB.setInt(&fbdo, +"/Oxygen_Level", ran1)) {
-			Serial.println("PASSED");
-			Serial.println("PATH: " + fbdo.dataPath());
-			Serial.println("TYPE: " + fbdo.dataType());
-		} else {
-			Serial.println("FAILED");
-			Serial.println("REASON: " + fbdo.errorReason());
-		}
-
-		if (Firebase.RTDB.setInt(&fbdo, "test/int1", ran2)) {
-			Serial.println("PASSED");
-			Serial.println("PATH: " + fbdo.dataPath());
-			Serial.println("TYPE: " + fbdo.dataType());
-		} else {
-			Serial.println("FAILED");
-			Serial.println("REASON: " + fbdo.errorReason());
-		}
-
-		if (Firebase.RTDB.setInt(&fbdo, "test/int2", ran3)) {
-			Serial.println("PASSED");
-			Serial.println("PATH: " + fbdo.dataPath());
-			Serial.println("TYPE: " + fbdo.dataType());
-		} else {
-			Serial.println("FAILED");
-			Serial.println("REASON: " + fbdo.errorReason());
-		}
-
-		if (Firebase.RTDB.setInt(&fbdo, "test/int3", ran4)) {
-			Serial.println("PASSED");
-			Serial.println("PATH: " + fbdo.dataPath());
-			Serial.println("TYPE: " + fbdo.dataType());
-		} else {
-			Serial.println("FAILED");
-			Serial.println("REASON: " + fbdo.errorReason());
-		}
-
-		// Write an Float number on the database path test/float
-		if (Firebase.RTDB.setFloat(
-			    &fbdo, "test/float", 0.01 + random(0, 100))) {
-			Serial.println("PASSED");
-			Serial.println("PATH: " + fbdo.dataPath());
-			Serial.println("TYPE: " + fbdo.dataType());
-		} else {
-			Serial.println("FAILED");
-			Serial.println("REASON: " + fbdo.errorReason());
-		}
-	}
 }

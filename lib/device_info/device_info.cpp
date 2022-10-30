@@ -1,7 +1,7 @@
-#include "device.h"
+#include "device_info.h"
 #include "WiFiManager.h"
 
-String Device::get_mac_address()
+String DeviceInfo::get_mac_address()
 {
 	String mac_address = WiFi.macAddress();
 	mac_address.replace(":", "");
@@ -9,7 +9,7 @@ String Device::get_mac_address()
 	return mac_address;
 }
 
-void Device::get_auth_data(String *email, String *password)
+void DeviceInfo::get_auth_data(String *email, String *password)
 {
 	String mac_address = get_mac_address();
 
