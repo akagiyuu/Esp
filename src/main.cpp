@@ -8,7 +8,6 @@
 #include <WiFiManager.h>
 #include <EEPROM.h>
 #include <wifi_helper.h>
-#include <env.h>
 #include "data_processor.h"
 #include "log.h"
 
@@ -19,6 +18,9 @@
 WiFiManager WifiManager;
 FirebaseData DataObject;
 int output[4];
+
+const char *ApiKey = "";
+const char *DatabaseURL = "";
 
 boolean read_and_parse_serial_data()
 {
