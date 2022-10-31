@@ -10,25 +10,21 @@
 #include <wifi_helper.h>
 #include <env.h>
 #include "data_processor.h"
+#include "log.h"
 
 #include <addons/RTDBHelper.h>
 
 #define EEPROM_SIZE 1
 
-WiFiManager wifi_manager;
-
-unsigned long sendDataPrevMillis = 0;
-int ran1 = 0;
-int ran2 = 0;
-int ran3 = 0;
-int ran4 = 0;
+WiFiManager WifiManager;
+FirebaseData DataObject;
+int output[4];
 
 boolean read_and_parse_serial_data()
 {
 	if (!Serial.available()) {
 		return false;
 	}
-    int output[4];
     Data::read(4, ',', output);
 
 	return true;
@@ -40,15 +36,24 @@ void setup()
 	Serial.println();
 	Serial.println();
 
-	WifiHelper::init(&wifi_manager);
+	WifiHelper::init(&WifiManager);
 
 	int is_signed_up = EEPROM.read(0);
 	Serial.println(is_signed_up);
 
-	// Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
+	Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
 	FirebaseHelper::init(is_signed_up, ApiKey, DatabaseURL);
+}
+
+void firebase_set_error_handler(FirebaseData *data_object) {
+    Log::Error(data_object->errorReason());
 }
 
 void loop()
 {
+    if(!Firebase.ready() || !read_and_parse_serial_data())
+        return;
+
+    if(!Firebase.RTDB.setInt(&DataObject, "Test/Oxygen level", output[0]))
+        firebase_set_error_handler(&DataObject);
 }

@@ -1,6 +1,16 @@
 #pragma once
-class Log {
-	public:
-	template <typename T> static void Info(T data);
-	template <typename T> static void Error(T data);
+#include <Arduino.h>
+
+namespace Log
+{
+	template <typename T> void Info(T data)
+	{
+		Serial.print("Info: ");
+		Serial.println(data);
+	}
+	template <typename T> void Error(T data)
+	{
+		Serial.print("Error: ");
+		Serial.println(data);
+	}
 };
