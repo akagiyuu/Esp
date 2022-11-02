@@ -14,6 +14,7 @@ namespace FirebaseHelper
 {
 	bool sign_up(string *email, string *password)
 	{
+		Log::Info("sign_up");
 		bool is_success = Firebase.signUp(&config, &auth, *email, *password);
 
 		if (is_success) {
@@ -34,6 +35,8 @@ namespace FirebaseHelper
 		string password;
 
 		DeviceInfo::get_auth_data(&email, &password);
+		Log::Info(api_key);
+		Log::Info(database_url);
 
 		config.api_key = api_key;
 		config.database_url = database_url;
