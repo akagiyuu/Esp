@@ -44,11 +44,11 @@ void setup()
 
 	Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
 	FirebaseHelper::auth(is_sign_up_needed);
-    //
-    // health.set("SP O2", 10);
-    // health.set("Heart rate", 20);
-    // const char *data[] = {"opk", "test"};
-    // FirebaseHelper::Conversion::array_to_json(data, 2, abnormal_conditions);
+
+    health.set("SP O2", 10);
+    health.set("Heart rate", 20);
+    const char *data[] = {"opk", "test"};
+    FirebaseHelper::Conversion::array_to_json(data, 2, abnormal_conditions);
 }
 
 void firebase_set_error_handler(FirebaseData *data_object)

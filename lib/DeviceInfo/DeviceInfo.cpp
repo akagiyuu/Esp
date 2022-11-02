@@ -12,7 +12,6 @@ String DeviceInfo::get_mac_address()
 
 void DeviceInfo::get_auth_data(char *email, char *password)
 {
-    Serial.println(get_mac_address());
 	strcpy(password, get_mac_address().c_str());
     sprintf(email, "%s@gmail.com", password);
 }

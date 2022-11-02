@@ -26,8 +26,8 @@ bool sign_up(const char *email, const char *password)
 void sign_in(const char *email, const char *password)
 {
 	Serial.println("Sign in");
-	Auth.user.email = String(email);
-	Auth.user.password = String(password);
+	Auth.user.email = email;
+	Auth.user.password = password;
 	Serial.println("Successfully sign in");
 }
 void FirebaseHelper::auth(bool is_sign_up_needed)
