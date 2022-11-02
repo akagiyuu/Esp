@@ -1,20 +1,19 @@
-#include "wifi_helper.h"
+#include "WifiHelper.h"
 #include "WiFiManager.h"
-#include "device_info.h"
+#include "DeviceInfo.h"
+#include <cstdio>
 
 String WifiHelper::default_parameter()
 {
 	String mac_address = DeviceInfo::get_mac_address();
-
-	String display = "<p>Your ID: " + mac_address + "</p>";
-	String email = mac_address + "@gmail.com";
+	char display[100];
+	sprintf(display, "<p>Your ID: %s</p>", mac_address.c_str());
 
 	return display;
 }
 
 void WifiHelper::init(WiFiManager *wifi_manager)
 {
-	String mac_address = DeviceInfo::get_mac_address();
 	const char *default_parameter = WifiHelper::default_parameter().c_str();
 
 	WiFiManagerParameter custom_text(default_parameter);

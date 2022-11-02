@@ -1,5 +1,6 @@
-#include "device_info.h"
+#include "DeviceInfo.h"
 #include "WiFiManager.h"
+#include <cstring>
 
 String DeviceInfo::get_mac_address()
 {
@@ -9,10 +10,9 @@ String DeviceInfo::get_mac_address()
 	return mac_address;
 }
 
-void DeviceInfo::get_auth_data(String *email, String *password)
+void DeviceInfo::get_auth_data(char *email, char *password)
 {
-	String mac_address = get_mac_address();
-
-	*email = mac_address + "@gmail.com";
-	*password = mac_address;
-};
+    Serial.println(get_mac_address());
+	strcpy(password, get_mac_address().c_str());
+    sprintf(email, "%s@gmail.com", password);
+}

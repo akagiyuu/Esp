@@ -2,9 +2,8 @@
 #include <Arduino.h>
 #include "WiFiManager.h"
 
-class WifiHelper
+namespace WifiHelper
 {
-    public:
-	static void init(WiFiManager *wifi_manager);
-	static String default_parameter();
-};
+	void init(WiFiManager *wifi_manager);
+	String default_parameter();
+}
