@@ -10,14 +10,15 @@
 #include <wifi_helper.h>
 #include "data_processor.h"
 #include "log.h"
-#include "env.h"
-
 #include <addons/RTDBHelper.h>
+#include "device_info.h"
 
 #define EEPROM_SIZE 1
 
 WiFiManager WifiManager;
 FirebaseData DataObject;
+FirebaseJson health;
+FirebaseJson abnormal_conditions;
 int output[4];
 
 boolean read_and_parse_serial_data()
@@ -25,7 +26,7 @@ boolean read_and_parse_serial_data()
 	if (!Serial.available()) {
 		return false;
 	}
-    Data::read(4, ',', output);
+	Data::read(4, ',', output);
 
 	return true;
 }
@@ -38,22 +39,30 @@ void setup()
 
 	WifiHelper::init(&WifiManager);
 
-	int is_signed_up = EEPROM.read(0);
-	Serial.println(is_signed_up);
+	int is_sign_up_needed = EEPROM.read(0);
+	Serial.println(is_sign_up_needed);
 
 	Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
-	FirebaseHelper::init(is_signed_up, ApiKey, DatabaseURL);
+	FirebaseHelper::init(is_sign_up_needed);
+
+    health.set("SP O2", 10);
+    health.set("Heart rate", 20);
+    const char *data[] = {"opk", "test"};
+    FirebaseHelper::array_to_json(data, 2, abnormal_conditions);
 }
 
-void firebase_set_error_handler(FirebaseData *data_object) {
-    Log::Error(data_object->errorReason());
+void firebase_set_error_handler(FirebaseData *data_object)
+{
+	Log::Error(data_object->errorReason());
 }
 
 void loop()
 {
-    if(!Firebase.ready() || !read_and_parse_serial_data())
-        return;
+	if (!Firebase.ready() || !read_and_parse_serial_data())
+		return;
 
-    if(!Firebase.RTDB.setInt(&DataObject, "Test/Oxygen level", output[0]))
-        firebase_set_error_handler(&DataObject);
+	if(!Firebase.RTDB.updateNode(&DataObject, DeviceInfo::get_mac_address(), &health))
+	    firebase_set_error_handler(&DataObject);
+    if(!Firebase.RTDB.updateNode(&DataObject, DeviceInfo::get_mac_address() + "/Abnormal conditions", &abnormal_conditions))
+	    firebase_set_error_handler(&DataObject);
 }
