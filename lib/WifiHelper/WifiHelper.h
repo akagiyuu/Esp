@@ -4,6 +4,6 @@
 
 namespace WifiHelper
 {
-	void init(WiFiManager *wifi_manager);
+	void init();
 	String default_parameter();
 }

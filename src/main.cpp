@@ -12,10 +12,10 @@
 #include <Log.h>
 #include <addons/RTDBHelper.h>
 #include <DeviceInfo.h>
+#include <Health.h>
 
 #define EEPROM_SIZE 1
 
-WiFiManager WifiManager;
 FirebaseData DataObject;
 FirebaseJson health;
 FirebaseJson abnormal_conditions;
@@ -37,7 +37,7 @@ void setup()
 	Serial.println();
 	Serial.println();
 
-	WifiHelper::init(&WifiManager);
+	WifiHelper::init();
 
 	int is_sign_up_needed = EEPROM.read(0);
 	Serial.println(is_sign_up_needed);
@@ -47,8 +47,7 @@ void setup()
 
     health.set("SP O2", 10);
     health.set("Heart rate", 20);
-    const char *data[] = {"opk", "test"};
-    FirebaseHelper::Conversion::array_to_json(data, 2, abnormal_conditions);
+	FirebaseHelper::Conversion::array_to_json(Health::AbnormalCondition, abnormal_conditions);
 }
 
 void firebase_set_error_handler(FirebaseData *data_object)

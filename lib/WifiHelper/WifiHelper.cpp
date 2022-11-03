@@ -12,15 +12,17 @@ String WifiHelper::default_parameter()
 	return display;
 }
 
-void WifiHelper::init(WiFiManager *wifi_manager)
+void WifiHelper::init()
 {
+    WiFiManager wifi_manager;
+
 	const char *default_parameter = WifiHelper::default_parameter().c_str();
 
 	WiFiManagerParameter custom_text(default_parameter);
 
-	wifi_manager->resetSettings();
+	wifi_manager.resetSettings();
 
-	wifi_manager->addParameter(&custom_text);
-	wifi_manager->autoConnect("WING's WiFi Manager");
+	wifi_manager.addParameter(&custom_text);
+	wifi_manager.autoConnect("WING's WiFi Manager");
 	Serial.println("connected :)");
 }
