@@ -8,28 +8,13 @@
 #include <WiFiManager.h>
 #include <EEPROM.h>
 #include <WifiHelper.h>
-#include "data_processor.h"
 #include <Log.h>
 #include <addons/RTDBHelper.h>
 #include <DeviceInfo.h>
-#include <Health.h>
+#include "Data.h"
 
 #define EEPROM_SIZE 1
 
-FirebaseData DataObject;
-FirebaseJson health;
-FirebaseJson abnormal_conditions;
-int output[4];
-
-boolean read_and_parse_serial_data()
-{
-	if (!Serial.available()) {
-		return false;
-	}
-	Data::read(4, ',', output);
-
-	return true;
-}
 void setup()
 {
 	EEPROM.begin(EEPROM_SIZE);
@@ -45,23 +30,11 @@ void setup()
 	Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
 	FirebaseHelper::auth(is_sign_up_needed);
 
-    health.set("SP O2", 10);
-    health.set("Heart rate", 20);
-	FirebaseHelper::Conversion::array_to_json(Health::AbnormalCondition, abnormal_conditions);
-}
-
-void firebase_set_error_handler(FirebaseData *data_object)
-{
-	Log::Error(data_object->errorReason());
+	Data::init();
 }
 
 void loop()
 {
-	if (!Firebase.ready() || !read_and_parse_serial_data())
-		return;
-    Serial.println("Update");
-	if(!Firebase.RTDB.updateNode(&DataObject, DeviceInfo::get_mac_address(), &health))
-	    firebase_set_error_handler(&DataObject);
-    if(!Firebase.RTDB.updateNode(&DataObject, DeviceInfo::get_mac_address() + "/Abnormal conditions", &abnormal_conditions))
-	    firebase_set_error_handler(&DataObject);
+	if (Data::update())
+		Data::send();
 }
