@@ -6,49 +6,51 @@
 #include <Log.h>
 #include <Health.h>
 #include <cstdlib>
+#include <Convert.h>
+#include "Health.h"
 
 #define BUFFER_SIZE 100
-char buffer[BUFFER_SIZE];
-int output[4];
 
-bool read_until(char terminator, int *output)
+char buffer[BUFFER_SIZE];
+
+bool try_read_until(char terminator)
 {
 	size_t length = Serial.readBytesUntil(terminator, buffer, BUFFER_SIZE);
-	if (length <= 0) {
+	if (length == 0)
 		return false;
-	}
-
-	*output = atoi(buffer);
-	return true;
-}
-bool read(size_t n, char terminator, int *array)
-{
-	bool is_success = true;
-	for (size_t i = 0; i < n; ++i) {
-		is_success |= read_until(terminator, &array[i]);
-	}
-
-	return is_success;
-}
-bool read_and_parse_serial_data()
-{
-	if (!Serial.available()) {
-		return false;
-	}
-	read(4, ',', output);
 
 	return true;
 }
 
 void Data::init()
 {
-	HealthData.set("SP O2", 10);
-	HealthData.set("Heart rate", 20);
-	FirebaseHelper::Conversion::array_to_json(Health::AbnormalCondition, AbnormalConditions);
+	String base = DeviceInfo::get_mac_address();
+    Data::Health = {
+	    { base + "/Heart rate", 10 },
+	    { base + "/SP O2", 10 },
+	    { base + "/Abnormal conditions", 2 },
+    };
+	// Data::AbnormalConditions.key = base + "/Abnormal conditions";
+
+	// Convert::to_json(Health::AbnormalCondition, AbnormalConditions.data);
 }
 
 bool Data::update()
 {
-	return read_and_parse_serial_data();
-}
+	static const char terminator = ',';
+	if (!Serial.available()) {
+		return false;
+	}
 
+	if (!try_read_until(terminator))
+		return false;
+	HeartRate.data = atoi(buffer);
+	Serial.println(HeartRate.data);
+
+	if (!try_read_until(terminator))
+		return false;
+	SPO2.data = atoi(buffer);
+	Serial.println(SPO2.data);
+
+	return true;
+}

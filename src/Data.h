@@ -3,11 +3,10 @@
 
 namespace Data
 {
+    extern String Keys[3];
+    extern FirebaseJson Values;
 	extern FirebaseData DataObject;
-	extern FirebaseJson HealthData;
-	extern FirebaseJson AbnormalConditions;
 	void init();
 	bool update();
 	bool send();
-	void send(String &ref, FirebaseJson *data);
 }

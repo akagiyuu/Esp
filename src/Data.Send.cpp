@@ -6,30 +6,31 @@
 #include <Log.h>
 #include <Health.h>
 #include <cstdlib>
+#include <map>
 
 void firebase_set_error_handler(FirebaseData *data_object)
 {
 	Log::Error(data_object->errorReason());
 }
 
-void Data::send(String &ref, FirebaseJson *data)
+	// template <size_t length> void to_json(const char *(&array)[length], FirebaseJson &output)
+template <typename T, size_t length> void send(String (&array)[length])
 {
-    Serial.print("Updating: ");
-    Serial.println(ref);
-	if (!Firebase.RTDB.updateNode(&DataObject, ref, data))
-		firebase_set_error_handler(&DataObject);
+	for (auto const &[key, value] : health_entry) {
+		Serial.print("Updating: ");
+		Serial.println(key);
+		if (!Firebase.RTDB.set(&Data::DataObject, key, value))
+			firebase_set_error_handler(&Data::DataObject);
+	}
 }
 
 bool Data::send()
 {
-	static String health_ref = DeviceInfo::get_mac_address();
-	static String abnormal_conditions_ref = DeviceInfo::get_mac_address() + "/Abnormal conditions";
 	while (!Firebase.ready())
 		;
 
+	send(Data::Keys);
+	// send(&Data::AbnormalConditions);
 
-	send(health_ref, &HealthData);
-	send(abnormal_conditions_ref, &AbnormalConditions);
-
-    return true;
+	return true;
 }

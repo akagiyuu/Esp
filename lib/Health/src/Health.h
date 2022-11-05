@@ -1,10 +1,8 @@
 #pragma once
+#include "json/FirebaseJson.h"
+#include <Arduino.h>
 
 namespace Health
 {
-	const char *AbnormalCondition[] = {
-		"Fall",
-		"HighSPO2",
-		"HighHeartRate",
-	};
+	extern const char *AbnormalCondition[3];
 }
