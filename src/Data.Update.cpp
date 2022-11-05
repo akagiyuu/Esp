@@ -24,12 +24,8 @@ bool try_read_until(char terminator)
 
 void Data::init()
 {
-	String base = DeviceInfo::get_mac_address();
-    Data::Health = {
-	    { base + "/Heart rate", 10 },
-	    { base + "/SP O2", 10 },
-	    { base + "/Abnormal conditions", 2 },
-    };
+	for (size_t i = 0; i < 3; ++i)
+		Values.set(Keys[i], 0);
 	// Data::AbnormalConditions.key = base + "/Abnormal conditions";
 
 	// Convert::to_json(Health::AbnormalCondition, AbnormalConditions.data);
@@ -42,15 +38,12 @@ bool Data::update()
 		return false;
 	}
 
-	if (!try_read_until(terminator))
-		return false;
-	HeartRate.data = atoi(buffer);
-	Serial.println(HeartRate.data);
-
-	if (!try_read_until(terminator))
-		return false;
-	SPO2.data = atoi(buffer);
-	Serial.println(SPO2.data);
+	for (int i = 0; i < 2; ++i) {
+		if (!try_read_until(terminator))
+			return false;
+		Values.set(Keys[i], atoi(buffer));
+		Serial.println(atoi(buffer));
+	}
 
 	return true;
 }

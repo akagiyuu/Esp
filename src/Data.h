@@ -3,8 +3,8 @@
 
 namespace Data
 {
-    extern String Keys[3];
-    extern FirebaseJson Values;
+	extern const char *Keys[3];
+	extern FirebaseJson Values;
 	extern FirebaseData DataObject;
 	void init();
 	bool update();

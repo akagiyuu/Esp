@@ -4,5 +4,4 @@
 
 namespace Health
 {
-	extern const char *AbnormalCondition[3];
 }

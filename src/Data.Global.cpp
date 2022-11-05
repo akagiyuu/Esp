@@ -1,6 +1,9 @@
 #include "Data.h"
-#include <map>
 
-String Keys[3];
-FirebaseJson Values;
+const char *Data::Keys[] = {
+    "Heart rate",
+    "SP O2",
+    "Abnormal conditions"
+};
+FirebaseJson Data::Values;
 FirebaseData Data::DataObject;
