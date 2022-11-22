@@ -1,4 +1,5 @@
 #include "Data.h"
+#include <Arduino.h>
 #include "json/FirebaseJson.h"
 #include <Arduino.h>
 #include <FirebaseHelper.h>
@@ -10,7 +11,7 @@
 
 void firebase_set_error_handler(FirebaseData *data_object)
 {
-	Log::Error(data_object->errorReason());
+	Serial.println(data_object->errorReason());
 }
 
 bool Data::send()

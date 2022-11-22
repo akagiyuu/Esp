@@ -1,11 +1,9 @@
-#include "FirebaseHelper.h"
+#include "Database.h"
+#include <EEPROM.h>
 #include <Arduino.h>
-#include <WifiHelper.h>
 #include <Firebase_ESP_Client.h>
 #include <addons/TokenHelper.h>
 #include <DeviceInfo.h>
-#include <EEPROM.h>
-#include <Log.h>
 #include "env.h"
 
 FirebaseAuth Auth;
@@ -13,7 +11,7 @@ FirebaseConfig Config;
 
 bool sign_up(const char *email, const char *password)
 {
-	Log::Info("sign_up");
+    Serial.println("signed up");
 	bool is_success = Firebase.signUp(&Config, &Auth, email, password);
 
 	if (is_success) {
@@ -30,7 +28,7 @@ void sign_in(const char *email, const char *password)
 	Auth.user.password = password;
 	Serial.println("Successfully sign in");
 }
-void FirebaseHelper::auth(bool is_sign_up_needed)
+void Database::auth(bool is_sign_up_needed)
 {
 	char email[BUFFER_SIZE];
 	char password[BUFFER_SIZE];

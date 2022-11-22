@@ -1,8 +1,7 @@
 #pragma once
 #include <Arduino.h>
-#include "WiFiManager.h"
 
-namespace WifiHelper
+namespace Internet
 {
 	void init();
 	String default_parameter();

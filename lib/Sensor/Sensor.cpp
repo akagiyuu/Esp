@@ -1,4 +1,5 @@
 #include "Sensor.h"
+#include <IO.h>
 
 #define BUFFER_SIZE 100
 
@@ -11,7 +12,7 @@ bool Sensor::read(struct Data *sensor_data)
 		return false;
 	}
 
-	if (!Helper::try_read_until(terminator))
+	if (IO::try_read_until(buffer, BUFFER_SIZE, terminator))
 		return false;
 
 	return true;
