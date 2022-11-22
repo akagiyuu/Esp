@@ -6,19 +6,19 @@
 String WifiHelper::default_parameter()
 {
 	String mac_address = DeviceInfo::get_mac_address();
-	char display[100];
-	sprintf(display, "<p>Your ID: %s</p>", mac_address.c_str());
+
+	String display = "<p>Your ID: " + mac_address + "</p>";
 
 	return display;
 }
 
 void WifiHelper::init()
 {
-    WiFiManager wifi_manager;
+	WiFiManager wifi_manager;
 
-	const char *default_parameter = WifiHelper::default_parameter().c_str();
+	String parameter = WifiHelper::default_parameter();
 
-	WiFiManagerParameter custom_text(default_parameter);
+	WiFiManagerParameter custom_text((const char *)parameter.c_str());
 
 	wifi_manager.resetSettings();
 

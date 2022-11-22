@@ -12,6 +12,7 @@
 #include <addons/RTDBHelper.h>
 #include <DeviceInfo.h>
 #include "Data.h"
+#include <AbnormalCondition.h>
 
 #define EEPROM_SIZE 1
 
