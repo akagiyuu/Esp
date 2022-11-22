@@ -6,6 +6,8 @@
 #include <DeviceInfo.h>
 #include "env.h"
 
+FirebaseData Database::DataObject;
+
 FirebaseAuth Auth;
 FirebaseConfig Config;
 

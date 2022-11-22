@@ -1,4 +1,5 @@
 #pragma once
+#include "Sensor.h"
 #include <Arduino.h>
 #include <Firebase_ESP_Client.h>
 
@@ -9,5 +10,6 @@ namespace Convert
 		for (size_t i = 0; i < length; ++i)
 			output.set(array[i], 0);
 	}
+    void to_json(struct Sensor::Data *sensor_data, FirebaseJson &output);
 	void to_string(FirebaseData *data_object, char *output);
 }

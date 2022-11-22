@@ -1,9 +1,9 @@
 #include "Internet.h"
-#include <WiFiManager>
+#include <WiFiManager.h>
 #include <DeviceInfo.h>
 #include <cstdio>
 
-String Internet::default_parameter()
+String default_parameter()
 {
 	String mac_address = DeviceInfo::get_mac_address();
 
@@ -16,7 +16,7 @@ void Internet::init()
 {
 	WiFiManager wifi_manager;
 
-	String parameter = Internet::default_parameter();
+	String parameter = default_parameter();
 
 	WiFiManagerParameter custom_text((const char *)parameter.c_str());
 

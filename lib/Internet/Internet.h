@@ -4,5 +4,4 @@
 namespace Internet
 {
 	void init();
-	String default_parameter();
 }
