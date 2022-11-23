@@ -28,11 +28,11 @@ namespace Sensor
 	}
 	class Manager {
 	    public:
-        Manager();
 		struct Health::Data health_data;
 		struct Motion::Data motion_data;
-        bool sync();
-        void to_json(FirebaseJson &output);
-        void print();
+		void init();
+		bool sync();
+		void to_json(FirebaseJson &output);
+		void print();
 	};
 }

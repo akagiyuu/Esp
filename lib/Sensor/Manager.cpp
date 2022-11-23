@@ -5,7 +5,7 @@
 
 using namespace Sensor;
 
-Manager::Manager()
+void Manager::init()
 {
 	Sensor::Health::init();
 	Sensor::Motion::init();
