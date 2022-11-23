@@ -26,7 +26,18 @@
 //
 // 	return true;
 // };
+void Sensor::init()
+{
+    Sensor::Health::init();
+}
 bool Sensor::read(struct Sensor::Data *sensor_data)
 {
-    static Health::Data health_data = {.heart_rate = 0, .spo2 = 0};
+	static Health::Data health_data = { .heart_rate = 0, .spo2 = 0 };
+    if(!Health::read(&health_data))
+        return false;
+
+    sensor_data->spo2 = health_data.spo2;
+    sensor_data->heart_rate = health_data.heart_rate;
+
+    return true;
 }

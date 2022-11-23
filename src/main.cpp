@@ -1,4 +1,3 @@
-#include "Sensor.h"
 #include <Arduino.h>
 #if defined(ESP8266)
 #include <ESP8266WiFi.h>
@@ -11,6 +10,7 @@
 #include <Internet.h>
 #include <addons/RTDBHelper.h>
 #include <DeviceInfo.h>
+#include <Sensor.h>
 
 #define EEPROM_SIZE 1
 

@@ -10,6 +10,7 @@ namespace Sensor
         int32_t velocity;
         int32_t altitude;
 	};
+    void init();
 	bool read(struct Data *sensor_data);
 
 	namespace Health
