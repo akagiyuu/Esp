@@ -1,7 +1,9 @@
 #include "Sensor.h"
+#include <Arduino.h>
 #include "spo2_algorithm.h"
 #include <Array.h>
 #include <MAX30105.h>
+#include <Misc.h>
 
 using namespace Sensor;
 
@@ -31,6 +33,14 @@ void read_raw(byte sample_index)
 
 void Health::init()
 {
+	if (!health_sensor.begin(Wire, I2C_SPEED_FAST)) {
+		Serial.println(F("MAX30105 was not found. Please check wiring/power."));
+		while (true)
+			;
+	}
+
+	Misc::wait_for_comfirm(F("Attach sensor to finger with rubber band. Press any key to start conversion"));
+
 	// clang-format off
 	byte led_brightness = 60; // Options: 0=Off to 255=50mA
     byte led_mode = 2; // Options: 1 = Red only, 2 = Red + IR, 3 = Red + IR + Green

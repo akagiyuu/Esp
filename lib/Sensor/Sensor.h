@@ -27,8 +27,11 @@ namespace Sensor
 	}
 	namespace Motion
 	{
-        struct Data {
-            sensors_vec_t acceleration;
-        };
+		struct Data {
+			sensors_vec_t acceleration;
+			sensors_vec_t gyro;
+		};
+        // void init();
+        // bool read(struct Data *motion_data);
 	}
 }
