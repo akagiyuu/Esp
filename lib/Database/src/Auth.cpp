@@ -1,6 +1,6 @@
 #include "Database.h"
-#include <EEPROM.h>
 #include <Arduino.h>
+#include <EEPROM.h>
 #include <Firebase_ESP_Client.h>
 #include <addons/TokenHelper.h>
 #include <DeviceInfo.h>
