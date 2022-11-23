@@ -9,12 +9,22 @@ Manager::Manager()
 {
 	Sensor::Health::init();
 	Sensor::Motion::init();
-    this->health_data = { .heart_rate = 0, .spo2 = 0 };
+	this->health_data = { .heart_rate = 0, .spo2 = 0 };
 }
 bool Manager::sync()
 {
 	bool is_health_read_successful = Health::read(&this->health_data);
 	bool is_motion_read_successful = Motion::read(&this->motion_data);
+	if (is_motion_read_successful) {
+		Serial.println("Gyro:");
+		Serial.println(this->motion_data.gyro.x);
+		Serial.println(this->motion_data.gyro.y);
+		Serial.println(this->motion_data.gyro.z);
+		Serial.println("Acel:");
+		Serial.println(this->motion_data.acceleration.x);
+		Serial.println(this->motion_data.acceleration.y);
+		Serial.println(this->motion_data.acceleration.z);
+	}
 
 	return is_health_read_successful || is_motion_read_successful;
 }
@@ -30,7 +40,6 @@ void Manager::to_json(FirebaseJson &output)
 
 void Manager::print()
 {
-    Serial.printf("Heart rate: %d\n", this->health_data.heart_rate);
-    Serial.printf("SP O2: %d\n", this->health_data.spo2);
+	Serial.printf("Heart rate: %d\n", this->health_data.heart_rate);
+	Serial.printf("SP O2: %d\n", this->health_data.spo2);
 }
-
