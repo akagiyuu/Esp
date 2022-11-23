@@ -9,7 +9,6 @@
 #include <EEPROM.h>
 #include <Internet.h>
 #include <addons/RTDBHelper.h>
-#include <DeviceInfo.h>
 #include <Sensor.h>
 
 #define EEPROM_SIZE 1

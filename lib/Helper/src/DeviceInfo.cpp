@@ -1,6 +1,5 @@
 #include "DeviceInfo.h"
 #include "WiFiManager.h"
-#include <cstring>
 
 String DeviceInfo::get_mac_address()
 {

@@ -1,4 +1,5 @@
 #include "Sensor.h"
+#include "json/FirebaseJson.h"
 #include <IO.h>
 #include <cstdlib>
 #include <AbnormalCondition.h>
@@ -36,6 +37,17 @@ void Manager::to_json(FirebaseJson &output)
 	output.set("Heart rate", heart_rate);
 	output.set("SP O2", spo2);
 	output.set("Abnormal conditions", AbnormalCondition::detect(heart_rate, spo2));
+
+	FirebaseJson gyro, acceleration;
+	gyro.set("x", this->motion_data.gyro.x);
+	gyro.set("y", this->motion_data.gyro.y);
+	gyro.set("z", this->motion_data.gyro.z);
+	acceleration.set("x", this->motion_data.acceleration.x);
+	acceleration.set("y", this->motion_data.acceleration.y);
+	acceleration.set("z", this->motion_data.acceleration.z);
+
+	output.set("Gyro", gyro);
+	output.set("Acceleration", acceleration);
 }
 
 void Manager::print()
