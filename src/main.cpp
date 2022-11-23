@@ -14,7 +14,6 @@
 
 #define EEPROM_SIZE 1
 
-Sensor::Manager SensorManager;
 
 void setup()
 {
@@ -34,6 +33,7 @@ void setup()
 
 void loop()
 {
+    static Sensor::Manager SensorManager;
 	if (SensorManager.sync())
 		Database::send(SensorManager);
 }
