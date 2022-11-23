@@ -14,6 +14,7 @@
 
 #define EEPROM_SIZE 1
 
+extern Sensor::Manager SensorManager;
 
 void setup()
 {
@@ -29,11 +30,11 @@ void setup()
 
 	Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
 	Database::auth(is_sign_up_needed);
+    Sensor::Manager SensorManager;
 }
 
 void loop()
 {
-    static Sensor::Manager SensorManager;
 	if (SensorManager.sync())
 		Database::send(SensorManager);
 }
