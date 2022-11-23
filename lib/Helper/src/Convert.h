@@ -5,11 +5,6 @@
 
 namespace Convert
 {
-	template <size_t length> void to_json(const char *(&array)[length], FirebaseJson &output)
-	{
-		for (size_t i = 0; i < length; ++i)
-			output.set(array[i], 0);
-	}
-    void to_json(struct Sensor::Data *sensor_data, FirebaseJson &output);
+    void to_json(const Sensor::Manager &sensor_manager, FirebaseJson &output);
 	void to_string(FirebaseData *data_object, char *output);
 }

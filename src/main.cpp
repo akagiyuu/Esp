@@ -14,7 +14,7 @@
 
 #define EEPROM_SIZE 1
 
-struct Sensor::Data sensor_data = { .heart_rate = 0, .spo2 = 0, .velocity = 0, .altitude = 0 };
+Sensor::Manager SensorManager;
 
 void setup()
 {
@@ -34,6 +34,6 @@ void setup()
 
 void loop()
 {
-	if (Sensor::read(&sensor_data))
-		Database::send(&sensor_data);
+	if (SensorManager.sync())
+		Database::send(SensorManager);
 }

@@ -7,15 +7,6 @@
 
 namespace Sensor
 {
-	struct Data {
-		int32_t heart_rate;
-		int32_t spo2;
-		int32_t velocity;
-		int32_t altitude;
-	};
-	void init();
-	bool read(struct Data *sensor_data);
-
 	namespace Health
 	{
 		struct Data {
@@ -31,7 +22,14 @@ namespace Sensor
 			sensors_vec_t acceleration;
 			sensors_vec_t gyro;
 		};
-        // void init();
-        // bool read(struct Data *motion_data);
+		void init();
+		bool read(struct Data *motion_data);
 	}
+	class Manager {
+	    public:
+        Manager();
+		struct Health::Data health_data;
+		struct Motion::Data motion_data;
+        bool sync();
+	};
 }

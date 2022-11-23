@@ -12,18 +12,19 @@ using namespace Sensor;
 
 static uint32_t IrBuffer[BUFFER_SIZE]; // infrared LED sensor data
 static uint32_t RedBuffer[BUFFER_SIZE]; // red LED sensor data
-MAX30105 health_sensor;
+
+MAX30105 HealthSensor;
 
 void read_raw(byte sample_index)
 {
-	while (health_sensor.available() == false)
-		health_sensor.check();
+	while (HealthSensor.available() == false)
+		HealthSensor.check();
 
 	digitalWrite(READ_LED, !digitalRead(READ_LED));
 
-	RedBuffer[sample_index] = health_sensor.getRed();
-	IrBuffer[sample_index] = health_sensor.getIR();
-	health_sensor.nextSample();
+	RedBuffer[sample_index] = HealthSensor.getRed();
+	IrBuffer[sample_index] = HealthSensor.getIR();
+	HealthSensor.nextSample();
 	//
 	// Serial.print("Ir: ");
 	// Serial.print(IrBuffer[sample_index]);
@@ -33,7 +34,7 @@ void read_raw(byte sample_index)
 
 void Health::init()
 {
-	if (!health_sensor.begin(Wire, I2C_SPEED_FAST)) {
+	if (!HealthSensor.begin(Wire, I2C_SPEED_FAST)) {
 		Serial.println(F("MAX30105 was not found. Please check wiring/power."));
 		while (true)
 			;
@@ -50,7 +51,7 @@ void Health::init()
 	int adc_range = 4096; // Options: 2048, 4096, 8192, 16384
 	// clang-format on
 
-	health_sensor.setup(led_brightness, sample_average, led_mode, sample_rate, pulse_width, adc_range);
+	HealthSensor.setup(led_brightness, sample_average, led_mode, sample_rate, pulse_width, adc_range);
 
 	for (byte i = 0; i < 100; i++) {
 		read_raw(i);
