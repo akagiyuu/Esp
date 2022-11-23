@@ -14,7 +14,7 @@
 
 #define EEPROM_SIZE 1
 
-struct Sensor::Data sensor_data = { .heart_rate = 0, .spo2 = 0, .velocity = 0, .height = 0 };
+struct Sensor::Data sensor_data = { .heart_rate = 0, .spo2 = 0, .velocity = 0, .altitude = 0 };
 
 void setup()
 {

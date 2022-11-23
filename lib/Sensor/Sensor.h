@@ -18,10 +18,8 @@ namespace Sensor
 			int32_t heart_rate;
 			int32_t spo2;
 		};
-		void init(MAX30105 *sensor);
-		bool read(MAX30105 *sensor, struct Data *health_data);
-
-		void read_raw(MAX30105 *sensor, byte sample_index);
+		void init();
+		bool read(struct Data *health_data);
 	}
 	namespace Motion
 	{
