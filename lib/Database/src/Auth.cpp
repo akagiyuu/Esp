@@ -6,6 +6,8 @@
 #include <DeviceInfo.h>
 #include "env.h"
 
+#define BUFFER_SIZE 100
+
 FirebaseData Database::DataObject;
 
 FirebaseAuth Auth;
