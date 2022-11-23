@@ -1,6 +1,5 @@
 #include "Sensor.h"
 #include "json/FirebaseJson.h"
-#include <IO.h>
 #include <cstdlib>
 #include <AbnormalCondition.h>
 
