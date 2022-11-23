@@ -1,4 +1,5 @@
 #pragma once
+#include "json/FirebaseJson.h"
 #include <Arduino.h>
 #include <MAX30105.h>
 #include <Adafruit_MPU6050.h>
@@ -31,5 +32,7 @@ namespace Sensor
 		struct Health::Data health_data;
 		struct Motion::Data motion_data;
         bool sync();
+        void to_json(FirebaseJson &output);
+        void print();
 	};
 }
