@@ -26,7 +26,7 @@ bool Manager::sync()
 		Serial.println(this->motion_data.acceleration.z);
 	}
 
-	return is_health_read_successful || is_motion_read_successful;
+	return is_health_read_successful && is_motion_read_successful;
 }
 
 void Manager::to_json(FirebaseJson &output)

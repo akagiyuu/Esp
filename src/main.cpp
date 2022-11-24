@@ -15,12 +15,15 @@
 
 Sensor::Manager SensorManager;
 
+#define BUTTON 8
+
 void setup()
 {
 	EEPROM.begin(EEPROM_SIZE);
 	Serial.begin(115200);
 	Serial.println();
 	Serial.println();
+	pinMode(BUTTON, INPUT);
 
 	Internet::init();
 
@@ -29,11 +32,13 @@ void setup()
 
 	Serial.printf("Firebase Client v%s\n\n", FIREBASE_CLIENT_VERSION);
 	Database::auth(is_sign_up_needed);
-    SensorManager.init();
+	SensorManager.init();
 }
 
 void loop()
 {
+	if (digitalRead(BUTTON) == HIGH)
+		Serial.println("Button pushed");
 	if (SensorManager.sync())
 		Database::send(SensorManager);
 }

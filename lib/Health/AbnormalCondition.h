@@ -1,5 +1,6 @@
 #pragma once
 #include <Arduino.h>
+#include <Sensor.h>
 
 namespace AbnormalCondition
 {
@@ -7,5 +8,5 @@ namespace AbnormalCondition
         UnsualHeartRate = 1,
         UnsualSPO2 = 2
 	};
-	uint32 detect(int32_t heart_rate, int32_t spo2);
+	uint32 detect(const Sensor::Manager &sensor_manager);
 }
