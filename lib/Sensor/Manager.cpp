@@ -35,13 +35,7 @@ void Manager::to_json(FirebaseJson &output)
 	int32_t spo2 = this->health_data.spo2;
 	output.set("Heart rate", heart_rate);
 	output.set("SP O2", spo2);
-    int abnormal_condition = AbnormalCondition::detect(heart_rate, spo2);
-    Serial.println(abnormal_condition);
-    Serial.println(heart_rate);
-    Serial.print(", ");
-    Serial.println(spo2);
-	output.set("Abnormal conditions", abnormal_condition);
-    Serial.print("Condition: ");
+	output.set("Abnormal conditions", AbnormalCondition::detect(heart_rate, spo2));
 
 	FirebaseJson gyro, acceleration;
 	gyro.set("x", this->motion_data.gyro.x);
