@@ -23,6 +23,6 @@ void Internet::init()
 	wifi_manager.resetSettings();
 
 	wifi_manager.addParameter(&custom_text);
-	wifi_manager.autoConnect("WING's WiFi Manager");
-	Serial.println("connected :)");
+	wifi_manager.autoConnect("Health care device");
+	Serial.println("connected");
 }

@@ -26,13 +26,4 @@ namespace Sensor
 		void init();
 		bool read(struct Data *motion_data);
 	}
-	class Manager {
-	    public:
-		struct Health::Data health_data;
-		struct Motion::Data motion_data;
-		void init();
-		bool sync();
-		void to_json(FirebaseJson &output);
-		void print();
-	};
 }

@@ -2,6 +2,7 @@
 #include "WString.h"
 #include <Firebase_ESP_Client.h>
 #include <Sensor.h>
+#include <SensorManager.h>
 
 namespace Database
 {
