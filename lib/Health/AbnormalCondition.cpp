@@ -1,7 +1,6 @@
 #include "AbnormalCondition.h"
-#include "Sensor.h"
 
-uint detect_health(int32_t heart_rate, int32_t spo2)
+uint AbnormalCondition::detect(int32_t heart_rate, int32_t spo2)
 {
 	uint32 conditions = 0;
 	if (heart_rate < 60 || heart_rate > 100)
@@ -11,9 +10,9 @@ uint detect_health(int32_t heart_rate, int32_t spo2)
 
 	return conditions;
 }
-uint32 AbnormalCondition::detect(const Sensor::Manager &sensor_manager)
-{
-	uint32 conditions = detect_health(sensor_manager.health_data.heart_rate, sensor_manager.health_data.spo2);
-
-	return conditions;
-}
+// uint32 detect(Sensor::Health::Data *health_data, Sensor::Motion::Data *motion_data)
+// {
+// 	uint32 conditions = detect_health(health_data->heart_rate, health_data->spo2);
+//
+// 	return conditions;
+// }

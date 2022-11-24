@@ -1,10 +1,10 @@
 #pragma once
-#include "json/FirebaseJson.h"
 #include <Arduino.h>
 #include <MAX30105.h>
 #include <Adafruit_MPU6050.h>
 #include <Adafruit_Sensor.h>
 #include <Wire.h>
+#include "json/FirebaseJson.h"
 
 namespace Sensor
 {
