@@ -40,7 +40,7 @@ void Health::init()
 			;
 	}
 
-	Misc::wait_for_comfirm(F("Attach sensor to finger with rubber band. Press any key to start conversion"));
+	// Misc::wait_for_comfirm(F("Attach sensor to finger with rubber band. Press any key to start conversion"));
 
 	// clang-format off
 	byte led_brightness = 60; // Options: 0=Off to 255=50mA
