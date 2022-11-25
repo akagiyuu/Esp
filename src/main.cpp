@@ -35,6 +35,6 @@ void setup()
 
 void loop()
 {
-	if (SensorManager.sync())
-		Database::send(SensorManager);
+	SensorManager.sync();
+	Database::send(SensorManager);
 }
