@@ -12,18 +12,8 @@ bool Sensor::Manager::sync()
 {
 	bool is_health_read_successful = Health::read(&this->health_data);
 	bool is_motion_read_successful = Motion::read(&this->motion_data);
-	if (is_motion_read_successful) {
-		Serial.println("Gyro:");
-		Serial.println(this->motion_data.gyro.x);
-		Serial.println(this->motion_data.gyro.y);
-		Serial.println(this->motion_data.gyro.z);
-		Serial.println("Acel:");
-		Serial.println(this->motion_data.acceleration.x);
-		Serial.println(this->motion_data.acceleration.y);
-		Serial.println(this->motion_data.acceleration.z);
-	}
 
-	return is_health_read_successful && is_motion_read_successful;
+	return is_health_read_successful || is_motion_read_successful;
 }
 
 void Sensor::Manager::to_json(FirebaseJson &output)
