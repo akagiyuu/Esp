@@ -13,7 +13,7 @@ bool Sensor::Manager::sync()
 	bool is_health_read_successful = Health::read(&this->health_data);
 	bool is_motion_read_successful = Motion::read(&this->motion_data);
 
-	return is_health_read_successful || is_motion_read_successful;
+    return is_health_read_successful;
 }
 
 void Sensor::Manager::to_json(FirebaseJson &output)
